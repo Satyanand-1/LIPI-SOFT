@@ -1,0 +1,113 @@
+export type Block =
+  | { type: "p"; text: string }
+  | { type: "h2"; text: string }
+  | { type: "ul"; items: string[] };
+
+export type Article = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  topic: string;
+  /** ISO date. */
+  published: string;
+  readingMinutes: number;
+  /** Unpublished articles are excluded from the site, sitemap and routes. */
+  isPublished: boolean;
+  body: Block[];
+};
+
+const allArticles: Article[] = [
+  {
+    slug: "choosing-a-first-process-to-automate",
+    title: "Choosing a first process to automate",
+    excerpt:
+      "The best first automation project is rarely the most impressive one. A short checklist for picking a process that will actually pay back.",
+    topic: "AI Automation",
+    published: "2026-10-12",
+    readingMinutes: 4,
+    isPublished: true,
+    body: [
+      { type: "p", text: "When a business decides to try automation, attention tends to go to the most painful process in the building. That is understandable, and often a mistake. The most painful process is usually painful because it is complicated, political or poorly defined, and those are the conditions under which automation projects struggle." },
+      { type: "p", text: "A better first project is modest, frequent and easy to judge. It builds confidence, exposes how your systems really behave and gives the team a working example to point at." },
+      { type: "h2", text: "Four questions to ask" },
+      { type: "ul", items: [
+        "Does it happen often? A task performed many times a week repays effort far faster than a quarterly one.",
+        "Is there a clear right answer? If two experienced colleagues would handle the same case differently, settle the rule before automating it.",
+        "Is the input reasonably consistent? Variety can be handled, but every additional format adds cost and failure modes.",
+        "What does a mistake cost? Low-stakes errors can be corrected afterwards. High-stakes ones need a person approving each result.",
+      ] },
+      { type: "h2", text: "Map it before touching any tools" },
+      { type: "p", text: "Write the process down as it actually happens, including the workarounds. Sit with the person who does it. You will almost always find steps nobody mentioned, and occasionally find that the process can be simplified so far that automation is no longer needed. That counts as a good outcome." },
+      { type: "h2", text: "Decide where people stay involved" },
+      { type: "p", text: "Automation works best as a division of labour. Let the system gather, extract, check and prepare. Let a person approve, handle exceptions and own the result. Designing these hand-off points deliberately is what separates a dependable workflow from a demonstration that falls over on its first unusual case." },
+      { type: "h2", text: "Measure something simple" },
+      { type: "p", text: "Before starting, record how long the process takes today and how often it goes wrong. Without a baseline you will have opinions about whether the project worked, and no evidence. A stopwatch and a tally sheet for two weeks is enough." },
+    ],
+  },
+  {
+    slug: "build-or-buy-business-software",
+    title: "Build or buy: a practical way to decide",
+    excerpt:
+      "Custom software is neither always better nor always more expensive. How to tell when an off-the-shelf product is enough, and when it is costing you more than it saves.",
+    topic: "Software Development",
+    published: "2026-10-12",
+    readingMinutes: 4,
+    isPublished: true,
+    body: [
+      { type: "p", text: "Every business reaches a point where an existing tool no longer fits. The question that follows is whether to find a better product or build something. As a company that builds software, we should say plainly: buying is frequently the right answer." },
+      { type: "h2", text: "When buying makes sense" },
+      { type: "p", text: "If the process is common across many businesses, such as payroll, bookkeeping, email or basic ticketing, mature products exist and are maintained by teams far larger than any you would fund. Adapting your process slightly to fit a good product is usually cheaper than building software to preserve a habit." },
+      { type: "h2", text: "When building makes sense" },
+      { type: "ul", items: [
+        "The process is a real point of difference, and a generic tool would flatten it.",
+        "You are paying for several products and stitching them together by hand every day.",
+        "Licence costs scale with users or volume in a way that will soon exceed the cost of ownership.",
+        "You need integration or control that available products do not offer.",
+      ] },
+      { type: "h2", text: "The option people forget" },
+      { type: "p", text: "It is rarely all or nothing. A common and sensible pattern is to buy the commodity parts and build only the piece that is specific to you, connecting the two through APIs. You get a maintained foundation and a custom layer small enough to own comfortably." },
+      { type: "h2", text: "Count the whole cost" },
+      { type: "p", text: "Compare the options over several years, not at the point of purchase. For a product, include licences, configuration, training and the manual work it leaves behind. For custom software, include hosting, maintenance and the changes you will inevitably want. An honest comparison often settles the argument." },
+    ],
+  },
+  {
+    slug: "what-a-crm-rollout-really-involves",
+    title: "What a CRM rollout really involves",
+    excerpt:
+      "Most disappointing CRM projects fail on process and adoption, not on software. What to settle before anyone logs in.",
+    topic: "CRM",
+    published: "2026-10-12",
+    readingMinutes: 3,
+    isPublished: true,
+    body: [
+      { type: "p", text: "A CRM is easy to buy and hard to adopt. The licence takes minutes. Getting a team to record their work in it, consistently, is the real project, and it has more to do with agreement than with configuration." },
+      { type: "h2", text: "Agree the pipeline first" },
+      { type: "p", text: "Before choosing fields and screens, agree on the stages a customer moves through and what each one means. If one person's qualified lead is another's cold enquiry, no report built on those stages will be trustworthy." },
+      { type: "h2", text: "Capture less than you think" },
+      { type: "p", text: "Every required field is a small tax on the person entering data. Ask for the minimum needed to act on a record and to report on the pipeline. You can add fields later. Removing the habit of skipping them is much harder." },
+      { type: "h2", text: "Clean the data before it moves" },
+      { type: "p", text: "Migrating years of duplicated, half-complete contacts into a new system makes the new system feel old on day one. Deduplicate, archive what is stale and import only what someone would reasonably use." },
+      { type: "h2", text: "Make it the easiest way to work" },
+      { type: "ul", items: [
+        "Connect email, phone and web forms so records create themselves.",
+        "Automate reminders so the system helps people, instead of only asking things of them.",
+        "Run reviews and meetings from the CRM, so that being up to date is visibly useful.",
+      ] },
+      { type: "p", text: "When the CRM saves people effort, adoption follows. When it feels like reporting for management, it quietly empties." },
+    ],
+  },
+];
+
+export const articles: Article[] = allArticles
+  .filter((a) => a.isPublished)
+  .sort((a, b) => b.published.localeCompare(a.published));
+
+export function getArticle(slug: string): Article | undefined {
+  return articles.find((a) => a.slug === slug);
+}
+
+export function formatDate(iso: string): string {
+  return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(
+    new Date(`${iso}T00:00:00Z`),
+  );
+}

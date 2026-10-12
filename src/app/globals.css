@@ -1,0 +1,457 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  /* Paper and ink: a warm, editorial light theme. */
+  --color-paper: #f4f1ea;
+  --color-paper-raised: #fbf9f4;
+  --color-paper-sunk: #e9e5da;
+  --color-ink: #14161a;
+  --color-ink-soft: #454952;
+  /* 5.1:1 on paper-sunk, 5.7:1 on paper. Used for small labels, so keep the margin. */
+  --color-ink-faint: #5a5e67;
+  --color-line: rgb(20 22 26 / 0.14);
+  --color-line-strong: rgb(20 22 26 / 0.32);
+
+  /* Vermilion is the single brand accent. `accent-ink` passes AA on paper. */
+  --color-accent: #d9432a;
+  --color-accent-ink: #b8341d;
+  --color-accent-soft: #f5d8cd;
+  --color-accent-bright: #ff7a5c;
+
+  /* Pine is reserved for diagrams and confirmations. */
+  --color-pine: #1c5a4e;
+  --color-pine-soft: #d6e5df;
+
+  --font-display: var(--font-bricolage), "Segoe UI", system-ui, sans-serif;
+  --font-sans: var(--font-hanken), "Segoe UI", system-ui, sans-serif;
+  --font-mono: var(--font-jbmono), ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --breakpoint-3xl: 100rem;
+
+  --animate-rise: rise 0.9s var(--ease-expo) both;
+  --animate-rise-in: rise-in 0.9s var(--ease-expo) both;
+  --animate-fade-up: fade-up 0.8s var(--ease-expo) both;
+  --animate-page: page-in 0.6s var(--ease-expo) backwards;
+
+  @keyframes rise {
+    from { transform: translateY(105%); }
+    to { transform: translateY(0); }
+  }
+  /* Above-the-fold headlines start partly visible so they paint in the first frame. */
+  @keyframes rise-in {
+    from { transform: translateY(46%); }
+    to { transform: translateY(0); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  /* Movement only: the page never starts invisible, so the headline paints at once. */
+  @keyframes page-in {
+    from { transform: translateY(14px); }
+    to { transform: translateY(0); }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .on-ink :focus-visible {
+    outline-color: var(--color-accent-bright);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+
+  button { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Layout and type utilities                                           */
+/* ------------------------------------------------------------------ */
+
+@utility shell {
+  width: 100%;
+  max-width: 84rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (min-width: 40rem) { padding-inline: 2rem; }
+  @media (min-width: 64rem) { padding-inline: 3rem; }
+  @media (min-width: 100rem) { max-width: 92rem; }
+}
+
+@utility section-y {
+  padding-block: 4.5rem;
+  @media (min-width: 48rem) { padding-block: 7rem; }
+  @media (min-width: 80rem) { padding-block: 9rem; }
+}
+
+@utility type-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 1.2rem + 6.4vw, 6.75rem);
+  line-height: 0.96;
+  letter-spacing: -0.026em;
+}
+
+@utility type-h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.25rem, 1.3rem + 4.2vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.026em;
+}
+
+@utility type-h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.85rem, 1.25rem + 2.6vw, 3.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+}
+
+@utility type-h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.018em;
+}
+
+@utility type-lead {
+  text-wrap: pretty;
+  font-size: clamp(1.08rem, 1rem + 0.45vw, 1.35rem);
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+}
+
+@utility type-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.3;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------ */
+/* Components                                                          */
+/* ------------------------------------------------------------------ */
+
+@layer components {
+  /* The "headline rule": content hangs from a strong horizontal line. */
+  .rule-top {
+    border-top: 2px solid var(--color-ink);
+  }
+  .on-ink .rule-top,
+  .rule-top.rule-paper {
+    border-top-color: var(--color-paper);
+  }
+
+  /* Buttons */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0.85rem 1.35rem;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 0.975rem;
+    line-height: 1.1;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 0.2s var(--ease-expo), color 0.3s, border-color 0.3s, background-color 0.3s;
+  }
+  .btn:active { transform: scale(0.975); }
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: translateY(101%);
+    transition: transform 0.45s var(--ease-expo);
+  }
+  .btn:hover::before,
+  .btn:focus-visible::before { transform: translateY(0); }
+  .btn .btn-arrow { transition: transform 0.35s var(--ease-expo); }
+  .btn:hover .btn-arrow { transform: translateX(4px); }
+
+  .btn-primary { background: var(--color-ink); color: var(--color-paper); }
+  .btn-primary::before { background: var(--color-accent-ink); }
+
+  .btn-secondary { border: 1px solid var(--color-line-strong); color: var(--color-ink); }
+  .btn-secondary::before { background: var(--color-ink); }
+  .btn-secondary:hover,
+  .btn-secondary:focus-visible { color: var(--color-paper); border-color: var(--color-ink); }
+
+  .btn-light { background: var(--color-paper); color: var(--color-ink); }
+  .btn-light::before { background: var(--color-accent-bright); }
+
+  .btn-outline-light { border: 1px solid rgb(244 241 234 / 0.4); color: var(--color-paper); }
+  .btn-outline-light::before { background: var(--color-paper); }
+  .btn-outline-light:hover,
+  .btn-outline-light:focus-visible { color: var(--color-ink); }
+
+  .btn-sm { min-height: 2.75rem; padding: 0.6rem 1rem; font-size: 0.9rem; }
+
+  /* Text link with an underline that draws in from the left. */
+  .link-draw {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size 0.4s var(--ease-expo), color 0.2s;
+    padding-bottom: 2px;
+  }
+  .link-draw:hover,
+  .link-draw:focus-visible,
+  .link-draw[aria-current="page"] { background-size: 100% 1px; }
+
+  .link-inline {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+  .link-inline:hover { color: var(--color-accent-ink); }
+  .on-ink .link-inline:hover { color: var(--color-accent-bright); }
+
+  /* Split headline: each word rises from behind a mask. */
+  .word-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+  }
+  .word-mask > span { display: inline-block; will-change: transform; }
+
+  /* Accordion panel: animates height without measuring. */
+  .acc-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s var(--ease-expo);
+  }
+  .acc-panel[data-open="true"] { grid-template-rows: 1fr; }
+  .acc-panel > div { overflow: hidden; }
+
+  /* Form fields */
+  .field {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.8rem 0.95rem;
+    background: var(--color-paper-raised);
+    border: 1px solid var(--color-line-strong);
+    border-radius: 3px;
+    color: var(--color-ink);
+    font-size: 1rem;
+    line-height: 1.4;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  }
+  .field::placeholder { color: var(--color-ink-faint); opacity: 1; }
+  .field:hover { border-color: var(--color-ink); }
+  .field:focus-visible {
+    outline: none;
+    border-color: var(--color-ink);
+    box-shadow: 0 0 0 3px rgb(20 22 26 / 0.14);
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--color-accent-ink);
+    box-shadow: 0 0 0 3px rgb(184 52 29 / 0.12);
+  }
+  select.field {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%2314161a' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  /* Placeholder text awaiting real company or legal details. */
+  .placeholder-mark {
+    background: var(--color-accent-soft);
+    color: var(--color-ink);
+    padding: 0.05em 0.3em;
+    border-radius: 2px;
+    font-size: 0.94em;
+  }
+
+  /* Long-form article and legal text */
+  .prose-lipi > * + * { margin-top: 1.15rem; }
+  .prose-lipi h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.4rem, 1.2rem + 0.9vw, 1.9rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-top: 2.75rem;
+  }
+  .prose-lipi p,
+  .prose-lipi li { font-size: 1.075rem; line-height: 1.7; color: var(--color-ink-soft); text-wrap: pretty; }
+  .prose-lipi ul { list-style: none; }
+  .prose-lipi li { position: relative; padding-left: 1.5rem; }
+  .prose-lipi li + li { margin-top: 0.6rem; }
+  .prose-lipi li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.78em;
+    width: 0.7rem;
+    height: 2px;
+    background: var(--color-accent);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion                                                              */
+/* ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------ */
+/* Scroll reveal                                                       */
+/* ------------------------------------------------------------------ */
+/* Elements wait hidden until Reveal.tsx marks them (or their parent) with
+   data-shown. Animations use `backwards` fill so nothing lingers afterwards. */
+
+[data-reveal="fade"],
+[data-reveal="item"] { opacity: 0; }
+
+[data-reveal="fade"][data-shown],
+[data-shown] > [data-reveal="item"] {
+  opacity: 1;
+  animation: fade-up 0.8s var(--ease-expo) backwards;
+  animation-delay: var(--reveal-delay, 0s);
+}
+
+[data-reveal="rise"] { transform: translateY(105%); }
+
+[data-split][data-shown] [data-reveal="rise"] {
+  transform: none;
+  animation: rise 0.9s var(--ease-expo) backwards;
+  animation-delay: var(--reveal-delay, 0s);
+}
+
+[data-stagger] > :nth-child(2) { --reveal-delay: calc(var(--stagger-gap, 0.08s) * 1); }
+[data-stagger] > :nth-child(3) { --reveal-delay: calc(var(--stagger-gap, 0.08s) * 2); }
+[data-stagger] > :nth-child(4) { --reveal-delay: calc(var(--stagger-gap, 0.08s) * 3); }
+[data-stagger] > :nth-child(5) { --reveal-delay: calc(var(--stagger-gap, 0.08s) * 4); }
+[data-stagger] > :nth-child(6) { --reveal-delay: calc(var(--stagger-gap, 0.08s) * 5); }
+[data-stagger] > :nth-child(7) { --reveal-delay: calc(var(--stagger-gap, 0.08s) * 6); }
+[data-stagger] > :nth-child(8) { --reveal-delay: calc(var(--stagger-gap, 0.08s) * 7); }
+[data-stagger] > :nth-child(9) { --reveal-delay: calc(var(--stagger-gap, 0.08s) * 8); }
+[data-stagger] > :nth-child(10) { --reveal-delay: calc(var(--stagger-gap, 0.08s) * 9); }
+[data-stagger] > :nth-child(11) { --reveal-delay: calc(var(--stagger-gap, 0.08s) * 10); }
+[data-stagger] > :nth-child(12) { --reveal-delay: calc(var(--stagger-gap, 0.08s) * 11); }
+
+/* Scroll-inked statement: opacity follows --p (0 to 1), set by one scroll listener. */
+.statement-word {
+  opacity: clamp(0.5, calc((var(--p, 0) * var(--n) - var(--i)) / 3 * 0.5 + 0.5), 1);
+}
+
+.hero-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 22s linear infinite;
+}
+.hero-ring-reverse { animation-direction: reverse; animation-duration: 30s; }
+.hero-paused .hero-ring { animation-play-state: paused; }
+
+.hero-grid {
+  background-image: radial-gradient(circle, rgb(20 22 26 / 0.24) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 46%, #000 42%, transparent 76%);
+  mask-image: radial-gradient(ellipse at 50% 46%, #000 42%, transparent 76%);
+}
+
+/* Sections far below the fold skip layout and paint until they approach the
+   viewport. Not used on sections containing scroll-linked animation. */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 56rem;
+}
+
+.scroll-cue::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 40%;
+  background: var(--color-accent);
+  animation: cue 2.2s var(--ease-expo) infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes cue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(260%); }
+}
+
+/* Honour reduced-motion: content appears immediately, nothing loops. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .scroll-cue::after { display: none; }
+  .statement-word { opacity: 1; }
+  /* Do not make anyone wait for a scroll position to see content. */
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
+
+@media print {
+  header, footer, .no-print { display: none !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+}

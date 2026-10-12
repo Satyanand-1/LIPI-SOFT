@@ -1,0 +1,385 @@
+export type ServiceId = "ai" | "software" | "network" | "crm" | "more";
+
+export type Capability = {
+  title: string;
+  /** One or two sentences. Used on its own when no problem/solution pair is given. */
+  summary?: string;
+  problem?: string;
+  solution?: string;
+  useCases?: string[];
+  benefits?: string[];
+  /** Short scope list for lighter capability entries. */
+  includes?: string[];
+};
+
+export type Service = {
+  id: ServiceId;
+  slug: string;
+  index: string;
+  name: string;
+  shortName: string;
+  headline: string;
+  summary: string;
+  intro: string[];
+  /**
+   * false = the offering has not been confirmed by the business yet. The site
+   * labels it accordingly while `site.flags.showDraftLabels` is on.
+   */
+  confirmed: boolean;
+  capabilities: Capability[];
+  /** Plain-language caveat shown on the detail page. */
+  note?: { title: string; body: string };
+  outcomes: string[];
+};
+
+export const services: Service[] = [
+  {
+    id: "ai",
+    slug: "ai-automation",
+    index: "01",
+    name: "AI Automation",
+    shortName: "AI Automation",
+    headline: "Automation that takes the repetitive work, and leaves the judgement to people.",
+    summary:
+      "AI-powered workflows, document processing and business assistants that plug into the systems you already use, with human approval where it matters.",
+    intro: [
+      "A surprising amount of working time goes on moving information between places: reading a document, typing it into a system, chasing an approval, compiling a report. That work is necessary, but it rarely needs a person's full attention.",
+      "We design automation around a specific process and a specific result. Some steps suit a language model, some suit plain rules, and some should stay with a person. Deciding which is which is most of the work.",
+    ],
+    confirmed: true,
+    capabilities: [
+      {
+        title: "Business process automation",
+        problem:
+          "Routine processes depend on people remembering to copy data, send reminders and update several systems by hand, so they stall whenever someone is busy or away.",
+        solution:
+          "We map the process end to end, then automate the predictable steps with triggers, rules and integrations, leaving clear hand-off points for the decisions that need a person.",
+        useCases: ["Order and invoice handling", "Employee and customer onboarding", "Recurring approvals and reminders"],
+        benefits: ["Less manual re-entry", "Fewer steps that depend on memory", "A process that is documented because it is built"],
+      },
+      {
+        title: "AI-powered workflows",
+        problem:
+          "Some steps resist ordinary automation because the input is unstructured: a free-text email, a varied request, a document that never arrives in the same format twice.",
+        solution:
+          "We place language models at the specific steps that need interpretation, such as classifying, summarising, extracting or drafting, inside a workflow that is otherwise deterministic and testable.",
+        useCases: ["Triage of inbound requests", "Drafting replies for review", "Summarising long threads or cases"],
+        benefits: ["Unstructured work becomes routable", "Staff review drafts instead of starting from nothing"],
+      },
+      {
+        title: "Intelligent document processing",
+        problem:
+          "Invoices, forms, contracts and reports arrive as PDFs and scans, and someone has to read them and key the details into another system.",
+        solution:
+          "We build pipelines that read documents, extract the fields you need, check them against your rules and existing records, and send anything uncertain to a person rather than guessing.",
+        useCases: ["Invoice and purchase order capture", "Application and claim forms", "Contract clause extraction"],
+        benefits: ["Shorter time from document to data", "Exceptions surfaced instead of buried"],
+      },
+      {
+        title: "AI assistants and business agents",
+        problem:
+          "Teams spend time on multi-step tasks across several tools: looking something up, updating a record, then notifying someone.",
+        solution:
+          "We build assistants that can carry out defined tasks using approved tools and permissions. The scope of what an agent may do is explicit, logged and limited to what you sign off.",
+        useCases: ["Internal helpdesk requests", "Sales and support follow-ups", "Scheduled data checks"],
+        benefits: ["Routine requests handled sooner", "A record of every action taken"],
+      },
+      {
+        title: "Retrieval-augmented generation (RAG) applications",
+        problem:
+          "General-purpose AI models know nothing about your products, policies or customers, and will answer confidently anyway.",
+        solution:
+          "RAG applications retrieve relevant passages from your own content first, then generate an answer grounded in them, with citations back to the source so the answer can be checked.",
+        useCases: ["Product and policy question answering", "Support knowledge search", "Research over large document sets"],
+        benefits: ["Answers tied to your own material", "Sources shown so users can verify"],
+      },
+      {
+        title: "Internal knowledge assistants",
+        problem:
+          "Company knowledge is spread across drives, wikis, tickets and inboxes. Finding the current answer often means asking whoever has been around longest.",
+        solution:
+          "We connect your knowledge sources to a searchable assistant that respects existing access permissions, so people only see answers drawn from content they are already allowed to open.",
+        useCases: ["HR and policy questions", "Engineering and operations runbooks", "Onboarding new team members"],
+        benefits: ["Less time spent searching", "Fewer interruptions for subject experts"],
+      },
+      {
+        title: "API and system integrations",
+        problem:
+          "Automation is only useful if it can reach the systems where the work happens, and many of those systems were never designed to talk to each other.",
+        solution:
+          "We connect CRMs, ERPs, accounting tools, databases and messaging platforms through their APIs, or build a thin integration layer where no API exists.",
+        useCases: ["CRM to accounting sync", "Form to database to notification", "Legacy system bridges"],
+        benefits: ["One entry, many systems updated", "Fewer mismatched records"],
+      },
+      {
+        title: "Human approval workflows",
+        problem:
+          "Fully automatic decisions are a poor fit for money, customers or compliance. One wrong action can cost more than the time the automation saved.",
+        solution:
+          "We build review steps into the workflow: the system prepares the work, shows its reasoning and sources, and waits for an accountable person to approve, edit or reject.",
+        useCases: ["Payment and refund approvals", "Outbound customer communication", "Changes to master data"],
+        benefits: ["Speed without giving up control", "Clear accountability and audit trail"],
+      },
+      {
+        title: "Reporting and workflow optimization",
+        problem:
+          "Once a process is automated it is easy to stop looking at it, and small failures or slow steps go unnoticed.",
+        solution:
+          "Each workflow records what it did, how long it took and where people stepped in. We use that record to tune prompts, rules and hand-off points over time.",
+        useCases: ["Operational dashboards", "Exception and error reports", "Periodic process reviews"],
+        benefits: ["Evidence for what to improve next", "Problems noticed early"],
+      },
+    ],
+    note: {
+      title: "What we don't promise",
+      body: "AI systems make mistakes, and no responsible automation is fully autonomous or error-free. We design for that: confidence thresholds, human review for consequential steps, logging, and a clear way to correct the system when it is wrong. Expected benefits depend on your process and data, so we assess them with you during discovery rather than quoting a figure up front.",
+    },
+    outcomes: [
+      "A documented map of the process before and after",
+      "Working automation with defined human checkpoints",
+      "Logs and reports that show what the system is doing",
+    ],
+  },
+  {
+    id: "software",
+    slug: "software-development",
+    index: "02",
+    name: "Software Development",
+    shortName: "Software",
+    headline: "Custom software, built around the way your business actually runs.",
+    summary:
+      "Web applications, business software and SaaS products, engineered from database to interface and maintained after launch.",
+    intro: [
+      "Off-the-shelf software works until your process stops matching its assumptions. From then on, people work around the tool with spreadsheets, exports and side channels.",
+      "We build software for the process you have, or the one you are trying to reach. That means understanding the work first, then designing the data model, interfaces and integrations to fit it.",
+    ],
+    confirmed: true,
+    capabilities: [
+      {
+        title: "Custom web application development",
+        summary: "Browser-based applications designed for a specific job, from internal tools to customer-facing portals.",
+        includes: ["Responsive, accessible interfaces", "Role-based access", "Built to be extended later"],
+      },
+      {
+        title: "Business software",
+        summary: "Operational systems that replace spreadsheets and manual tracking: orders, inventory, scheduling, billing, approvals.",
+        includes: ["Workflow and approval logic", "Reporting and exports", "Audit history"],
+      },
+      {
+        title: "Frontend and backend engineering",
+        summary: "Complete application engineering, or reinforcement for the part of the stack your team needs help with.",
+        includes: ["Component-based interfaces", "Service and business logic layers", "Performance and reliability work"],
+      },
+      {
+        title: "API development and integration",
+        summary: "Well-documented APIs for your own products, and integrations with the third-party services you depend on.",
+        includes: ["REST and event-driven interfaces", "Authentication and rate limiting", "Third-party service integration"],
+      },
+      {
+        title: "Database design",
+        summary: "Data models that reflect the business accurately, so reporting and new features stay straightforward.",
+        includes: ["Schema design and migration", "Indexing and query tuning", "Backup and recovery planning"],
+      },
+      {
+        title: "SaaS product development",
+        summary: "Multi-tenant products taken from first version to a platform that customers can rely on.",
+        includes: ["Tenant and subscription models", "Onboarding and account management", "Usage monitoring"],
+      },
+      {
+        title: "Legacy system modernization",
+        summary: "Moving ageing systems to maintainable foundations in stages, without stopping the business to do it.",
+        includes: ["Assessment and migration plan", "Incremental replacement", "Data migration and verification"],
+      },
+      {
+        title: "Testing, deployment, and maintenance",
+        summary: "Automated tests, repeatable releases and ongoing care once the software is in use.",
+        includes: ["Automated and manual testing", "Deployment pipelines", "Monitoring, fixes and updates"],
+      },
+    ],
+    outcomes: [
+      "Source code and documentation you own",
+      "A deployed, tested application",
+      "A maintenance plan agreed before launch",
+    ],
+  },
+  {
+    id: "network",
+    slug: "networking-it-infrastructure",
+    index: "03",
+    name: "Networking & IT Infrastructure",
+    shortName: "Networking & IT",
+    headline: "The network underneath everything, designed so nobody has to think about it.",
+    summary:
+      "Network design, secure connectivity, servers and day-to-day infrastructure support for offices and multi-site businesses.",
+    intro: [
+      "Every application, call and transaction depends on infrastructure that most people only notice when it fails. A network that grew piece by piece tends to fail in ways that are hard to trace.",
+      "We plan and build infrastructure as a whole: how sites connect, how access is controlled, how the system is watched, and what happens when a component goes down.",
+    ],
+    confirmed: true,
+    capabilities: [
+      {
+        title: "Network design and implementation",
+        summary: "Wired and wireless networks planned around how many people, devices and sites you need to support.",
+        includes: ["Site survey and topology design", "Switching, routing and wireless", "Documentation of the final build"],
+      },
+      {
+        title: "Network configuration and optimization",
+        summary: "Tuning existing networks that have become slow, unreliable or difficult to manage.",
+        includes: ["Configuration review", "Segmentation and traffic prioritisation", "Capacity planning"],
+      },
+      {
+        title: "Infrastructure setup",
+        summary: "The physical and logical foundations for a new office, a move or an expansion.",
+        includes: ["Structured cabling coordination", "Racks, power and core equipment", "User and device provisioning"],
+      },
+      {
+        title: "Secure connectivity",
+        summary: "Controlled access between sites, remote staff and cloud services.",
+        includes: ["Site-to-site and remote access VPN", "Firewall policy design", "Access control by role and device"],
+      },
+      {
+        title: "Server and infrastructure deployment",
+        summary: "On-premises, cloud or hybrid servers installed, hardened and documented.",
+        includes: ["Server installation and virtualisation", "Storage and backup configuration", "Baseline hardening"],
+      },
+      {
+        title: "Network monitoring and troubleshooting",
+        summary: "Visibility into the health of the network, and methodical diagnosis when something is wrong.",
+        includes: ["Monitoring and alerting setup", "Fault diagnosis", "Root-cause reporting"],
+      },
+      {
+        title: "Business IT infrastructure support",
+        summary: "Ongoing support for the systems your team relies on every day.",
+        includes: ["Scheduled maintenance", "Change management", "Support arrangements agreed per engagement"],
+      },
+    ],
+    note: {
+      title: "Scope is confirmed per engagement",
+      body: "Infrastructure work depends on site conditions, existing equipment and vendor choices. We confirm exactly what is included, and what is handled by a third party, in the written scope before any work begins.",
+    },
+    outcomes: [
+      "Network and infrastructure documentation",
+      "A tested, monitored environment",
+      "A support arrangement that matches your needs",
+    ],
+  },
+  {
+    id: "crm",
+    slug: "crm-solutions",
+    index: "04",
+    name: "CRM Solutions",
+    shortName: "CRM",
+    headline: "Every lead, conversation and follow-up in one place your team will actually use.",
+    summary:
+      "CRM implementation, customisation, automation and migration, so leads are organised, follow-ups happen and customer history is never lost.",
+    intro: [
+      "Leads arrive by phone, email, web form and referral, and without a shared system they live in individual inboxes and notebooks. Follow-ups slip, and nobody can say with confidence what is in the pipeline.",
+      "A CRM fixes that only if it matches how your team sells and supports. We configure the system around your stages, your language and your reporting needs, then connect it to the tools around it.",
+    ],
+    confirmed: true,
+    capabilities: [
+      {
+        title: "CRM implementation and customization",
+        summary: "Selecting and configuring a CRM platform around your sales and service process, or building a custom one where that fits better.",
+        includes: ["Requirements and platform selection", "Fields, stages and permissions", "User training"],
+      },
+      {
+        title: "Lead and sales pipeline management",
+        summary: "A clear view of every opportunity: where it came from, who owns it and what happens next.",
+        includes: ["Lead capture from all channels", "Assignment and routing rules", "Pipeline stages and forecasting views"],
+      },
+      {
+        title: "Customer lifecycle workflows",
+        summary: "Defined steps from first enquiry through onboarding, renewal and repeat business.",
+        includes: ["Onboarding checklists", "Renewal and review reminders", "Hand-offs between teams"],
+      },
+      {
+        title: "Sales and marketing automation",
+        summary: "Timely, consistent follow-up without relying on someone to remember.",
+        includes: ["Follow-up sequences and tasks", "Segmented campaigns", "Lead scoring rules"],
+      },
+      {
+        title: "Customer support workflows",
+        summary: "Support requests tracked against the customer record, with ownership and response targets.",
+        includes: ["Ticket intake and routing", "Escalation rules", "Shared customer history"],
+      },
+      {
+        title: "Reporting and analytics",
+        summary: "Dashboards built on questions the business needs answered, not on whatever the default template shows.",
+        includes: ["Pipeline and activity reports", "Source and conversion tracking", "Scheduled summaries"],
+      },
+      {
+        title: "CRM migration and integrations",
+        summary: "Moving from spreadsheets or an older CRM, and connecting the new one to the rest of your stack.",
+        includes: ["Data cleaning and migration", "Email, telephony and website integration", "Accounting and ERP sync"],
+      },
+    ],
+    outcomes: [
+      "A configured CRM that mirrors your process",
+      "Clean, migrated customer data",
+      "A team trained to use it day to day",
+    ],
+  },
+  {
+    id: "more",
+    slug: "technology-services",
+    index: "05",
+    name: "Additional Technology Services",
+    shortName: "More services",
+    headline: "The supporting work that keeps systems running and improving.",
+    summary:
+      "Cloud and DevOps, integration, data, consulting and ongoing technical support, arranged around what a project needs.",
+    intro: [
+      "Most projects need more than one discipline. A new application needs somewhere to run, data to draw on and someone to look after it once it is live.",
+      "The services below are offered alongside our core work or on their own. Each is scoped individually.",
+    ],
+    confirmed: false,
+    capabilities: [
+      {
+        title: "Cloud and DevOps",
+        summary: "Cloud environments, automated deployment and the operational practices that keep releases routine.",
+        includes: ["Cloud architecture and migration", "CI/CD pipelines", "Infrastructure as code and monitoring"],
+      },
+      {
+        title: "Business process consulting",
+        summary: "A structured look at how work moves through the business before deciding what to build or buy.",
+        includes: ["Process mapping", "Requirements definition", "Technology selection advice"],
+      },
+      {
+        title: "System integration",
+        summary: "Connecting separate applications so data is entered once and available everywhere it is needed.",
+        includes: ["Integration design", "Middleware and API connectors", "Data synchronisation"],
+      },
+      {
+        title: "Data engineering and analytics",
+        summary: "Reliable pipelines and reporting that turn operational data into something the business can read.",
+        includes: ["Data pipelines and warehousing", "Dashboards and reporting", "Data quality checks"],
+      },
+      {
+        title: "Application maintenance and technical support",
+        summary: "Continued care for software already in use, including systems built by someone else.",
+        includes: ["Bug fixes and updates", "Performance and security patches", "Support arrangements by agreement"],
+      },
+      {
+        title: "Digital transformation",
+        summary: "A staged plan for moving manual or paper-based operations onto connected digital systems.",
+        includes: ["Current-state assessment", "Phased roadmap", "Change support for teams"],
+      },
+    ],
+    outcomes: [
+      "A scoped plan for the supporting work",
+      "Clear ownership of each component",
+      "Documentation for whoever maintains it next",
+    ],
+  },
+];
+
+export const coreServices = services.filter((s) => s.id !== "more");
+
+export function getService(slug: string): Service | undefined {
+  return services.find((s) => s.slug === slug);
+}
+
+export function serviceHref(service: Pick<Service, "slug">): string {
+  return `/services/${service.slug}`;
+}
