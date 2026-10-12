@@ -1,0 +1,40 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/work/layout,_N_T_/work/[slug]/layout,_N_T_/work/[slug]/page,_N_T_/work/crm-rollout-lead-routing"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/_index",
+    "/work/$d$slug/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 0,
+    "slots": {
+      "children": {
+        "hints": 64,
+        "slots": {
+          "children": {
+            "hints": 96,
+            "slots": {
+              "children": {
+                "hints": 160,
+                "slots": null
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/019267d7d0c7835dd85222bbf6a05cbfe3887a4775e74d8581b6f6e2aa6b375d/$/work/crm-rollout-lead-routing",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/work/[slug]/page"
+    },
+    "isFallback": false
+  }
+}

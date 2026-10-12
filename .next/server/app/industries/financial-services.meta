@@ -1,0 +1,40 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/industries/layout,_N_T_/industries/[slug]/layout,_N_T_/industries/[slug]/page,_N_T_/industries/financial-services"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/_index",
+    "/industries/$d$slug/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 0,
+    "slots": {
+      "children": {
+        "hints": 64,
+        "slots": {
+          "children": {
+            "hints": 96,
+            "slots": {
+              "children": {
+                "hints": 160,
+                "slots": null
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/08cde3a716aabc8bdab14dd4610834299e6a5853a55aadc2926f17f0d7552400/$/industries/financial-services",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/industries/[slug]/page"
+    },
+    "isFallback": false
+  }
+}

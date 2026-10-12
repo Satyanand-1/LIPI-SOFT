@@ -1,0 +1,40 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/insights/layout,_N_T_/insights/[slug]/layout,_N_T_/insights/[slug]/page,_N_T_/insights/choosing-a-first-process-to-automate"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/_index",
+    "/insights/$d$slug/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 0,
+    "slots": {
+      "children": {
+        "hints": 64,
+        "slots": {
+          "children": {
+            "hints": 96,
+            "slots": {
+              "children": {
+                "hints": 160,
+                "slots": null
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/aeb31440a50101acb8d2313af4b6073d55908355f879464fe92831daf9106ff3/$/insights/choosing-a-first-process-to-automate",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/insights/[slug]/page"
+    },
+    "isFallback": false
+  }
+}
